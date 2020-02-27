@@ -1,6 +1,7 @@
 import unittest
 
-from app import app,db,Movie,User
+from watchlist import app,db
+from watchlist.models import User,Movie
 
 
 class WatchlistTestCase(unittest.TestCase):
@@ -64,14 +65,10 @@ class WatchlistTestCase(unittest.TestCase):
     #删除
     def test_delete_item(self):
         self.login()
-
-
         response = self.client.post('/movie/delete/1',follow_redirects = True)
         data = response.get_data(as_text=True)
         self.assertIn('删除数据成功',data)
-        
-
-
+    
 
 
 if __name__ == '__main__':

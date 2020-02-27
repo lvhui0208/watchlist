@@ -98,12 +98,16 @@ def admin(username,password):
 
 
 # flask-login  初始化操作
-Login_manager = LoginManager(app)  # 实例化扩展类
-@Login_manager.user_loader
+login_manager = LoginManager(app)  # 实例化扩展类
+@login_manager.user_loader
 def load_user(user_id):  # 创建用户加载回调函数，接受用户ID作为参数
     user = User.query.get(int(user_id))
     return user
     
+#
+login_manager.login_view = 'login'
+login_manager.login_manager = '没有登录'
+
     # 首页
 
 @app.route('/',methods=['GET','POST'])
@@ -199,6 +203,8 @@ def login():
         return redirect(url_for('login'))
     return render_template('login.html')
 
+
+
 # 用户登出
 @app.route('/logout')
 def logout():
@@ -211,7 +217,13 @@ def logout():
 
 @app.errorhandler(404) # 传入要处理的错误代码
 def page_not_found(e):
-    return render_template('404.html'),404
+    return render_template('errors/404.html'),404
+@app.errorhandler(400) # 传入要处理的错误代码
+def bad_request(e):
+    return render_template('errors/400.html'),400
+@app.errorhandler(500) # 传入要处理的错误代码
+def internal_server_error(e):
+    return render_template('errors/500.html'),500
 
 @app.context_processor  # 模板上下文处理函数
 def inject_user():
