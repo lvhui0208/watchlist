@@ -1,6 +1,6 @@
 import click
 from watchlist import app,db
-from watchlist.models import User,Movie
+from watchlist.models import User,Ariticle
 
 # 自定义initdb
 @app.cli.command()
@@ -11,30 +11,6 @@ def initdb(drop):
     db.create_all()
     click.echo('初始化数据库')
 
-# 自定义命令forge，把数据写入数据库
-@app.cli.command()
-def forge():
-    db.create_all()
-    name = "Bruce"
-    movies = [
-        {'title':'杀破狼','year':'2003'},
-        {'title':'扫毒','year':'2018'},
-        {'title':'捉妖记','year':'2016'},
-        {'title':'囧妈','year':'2020'},
-        {'title':'葫芦娃','year':'1989'},
-        {'title':'玻璃盒子','year':'2020'},
-        {'title':'调酒师','year':'2020'},
-        {'title':'釜山行','year':'2017'},
-        {'title':'导火索','year':'2005'},
-        {'title':'叶问','year':'2015'}
-    ]
-    user = User(name=name)
-    db.session.add(user)
-    for m in movies:
-        movie = Movie(title=m['title'],year=m['year'])
-        db.session.add(movie)
-    db.session.commit()
-    click.echo('数据导入完成')
 
 # 生成admin账号的函数
 @app.cli.command()

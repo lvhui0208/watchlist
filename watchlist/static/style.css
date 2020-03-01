@@ -1,3 +1,6 @@
+.acfs{
+    width: 200px;
+}
 body{
     max-width: 600px;
     margin: auto;
@@ -11,10 +14,7 @@ footer{
     text-align: center;
     padding: 10px;
 }
-/* 头像 */
-.avatar{
-    width: 40px;
-}
+
 
 /* 电影列表 */
 .movie-list{
